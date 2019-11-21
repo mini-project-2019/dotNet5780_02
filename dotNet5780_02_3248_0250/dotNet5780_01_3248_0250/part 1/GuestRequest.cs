@@ -14,7 +14,7 @@ namespace part_1
 
         public override string ToString()
         {
-            return "Entry date: " + Entry + 
+            return "Entry date: " +
                    "\nRelease date: " + Release + 
                    "\nRequest approved: " + IsApproved +
                    "\n";
