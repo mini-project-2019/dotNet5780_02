@@ -25,7 +25,7 @@ namespace part_1
 
         private bool[,] diary;
 
-        public HostingUnit()
+        public HostingUnit() // test
         {
             HostingUnitKey = stSerialKey++;
             diary = new bool[12,31];
