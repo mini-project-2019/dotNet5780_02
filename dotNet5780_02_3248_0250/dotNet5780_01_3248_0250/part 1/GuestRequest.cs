@@ -8,10 +8,14 @@ namespace part_1
 {
     class GuestRequest
     {
-        public Date Entry;
-        public Date Release;
+        public DateTime Entry;
+        public DateTime Release;
         public bool IsApproved;
 
+        public int getDuration()
+        {
+            return (int)Release.Subtract(Entry).TotalDays;
+        }
         public override string ToString()
         {
             return "Entry date: " +

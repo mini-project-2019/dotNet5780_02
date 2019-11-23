@@ -8,9 +8,9 @@ namespace part_1
 {
     class HostingUnit
     {
-        static private int stSerialKey = 0;
+        static private int stSerialKey = 10000000;
 
-        public int _HostingUnitKey;
+        public static int _HostingUnitKey;
         public int HostingUnitKey
         {
             get
@@ -34,71 +34,86 @@ namespace part_1
         
         public bool approveRequest(GuestRequest GR)
         {
-            /*
-            for (int i = 0; i < duration - 1; i++)
-            // The last day is not counted
+            
+            for (int i = 0; i < GR.getDuration() - 1; i++)
+            // Signs nights and not days
             {
-                if (diary[getNewMonth(day - 1, month - 1, i), getNewDay(day - 1, i)])
-                // If there is at least one occupied day then the order rejected
+                if (diary[GR.Entry.AddDays(i).Month - 1, GR.Entry.AddDays(i).Day - 1])
+                    // If there is at least one occupied day then the order rejected
+                    /* Decreases the parameters in 1 to fix from ranges 
+                       of [1, 31], [1, 12] to [0, 30], [0, 11]
+                    */
+                {
+                    GR.IsApproved = false;
+                    return false;
+                }
+            }
+
+            for (int i = 0; i < GR.getDuration() - 1; i++)
+                // Signs the new occupied days
                 /* Decreases the parameters in 1 to fix from ranges 
                    of [1, 31], [1, 12] to [0, 30], [0, 11]
-                 */
-            /*       {
-                       Console.WriteLine("Request rejected");
-                       return;
-                   }
-               }
+                */
+            {
+                diary[GR.Entry.AddDays(i).Month - 1, GR.Entry.AddDays(i).Day - 1] = true;
+            }
 
-               Console.WriteLine("Request accepted");
+            GR.IsApproved = true;
+            return true; 
+        }
 
-               for (int i = 0; i < duration - 1; i++)
-               // Signs the new occupied days
-               {
-                   diary[getNewMonth(day - 1, month - 1, i), getNewDay(day - 1, i)] = true;
-               }
-               */
-            return false;
-       }
-
+        public override string ToString()
+        {
+            return HostingUnitKey + ": " + occupiedDays_ToString(); 
+        }
+        
         private string occupiedDays_ToString()
         {
-            /*
-             for (int i = 0; i < 12; i++)
+            string occupiedDays = "";
+            for (int i = 0; i < 12; i++)
             {
                 for (int j = 0; j < 31; j++)
                 {
-                    if (occupancy[i, j])
+                    if (diary[i, j])
                     {
                         int startMonth = i, startDay = j;
-                        while (occupancy[i, j] || // Regular situation
-                        
+                        while (diary[i, j] || // Regular situation
                             /* Makes sure that when two vacations are overlapping 
                                but not cut each other, the vacations are considered as one vacation
-                         */
-         /*   (!occupancy[i, j] && occupancy[getNewMonth(j, i, 1), getNewDay(j, 1)]))
+                            */
+                            (!diary[i, j] && diary[getNewMonth(j, i, 1), getNewDay(j, 1)]))
                         {
-                // Increases the end date of the vacation in 1
-                i = getNewMonth(j, i, 1);
-                j = getNewDay(j, 1);
+                            // Increases the end date of the vacation in 1
+                            i = getNewMonth(j, i, 1);
+                            j = getNewDay(j, 1);
+                        }
+
+                        occupiedDays += "" + (startDay + 1) + "/" + (startMonth + 1) + 
+                                        " - " + 
+                                        (j + 1) + "/" + (i + 1) +
+                                        ", ";
+                        /* Increase the parameters in 1 to fix from ranges 
+                           of [0, 30], [0, 11] to [1, 31], [1, 12]
+                        */
+                    }
+                }
             }
-
-            Console.WriteLine("{0}/{1} - {2}/{3}",
-                startDay + 1, startMonth + 1, j + 1, i + 1);
-            /* Increase the parameters in 1 to fix from ranges 
-               of [0, 30], [0, 11] to [1, 31], [1, 12]
-             *//*
+            
+            // Deletes the last 2 characters - ", "
+            return occupiedDays.Substring(0, occupiedDays.Length - 3);
         }
-    }
-}*/
-             
-            return null;
-        }
-
         
-        
-        public override string ToString()
+        static private int getNewMonth(int day, int month, int duration)
+        // Returns the month of the last day of the request in range of [0, 30]
         {
-            return occupiedDays_ToString() + HostingUnitKey; 
+            return month + (day + duration) / 31;
+        }
+
+        static private int getNewDay(int day, int duration)
+        // Returns the location in month of the last day of the request in range of [0, 11]
+        {
+            return ((day + duration) % 31);
         }
     }
 }
+    

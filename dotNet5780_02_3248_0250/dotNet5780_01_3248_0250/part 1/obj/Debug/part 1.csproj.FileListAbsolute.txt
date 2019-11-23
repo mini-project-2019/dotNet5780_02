@@ -1,0 +1,6 @@
+C:\Users\גלעד יוסף\Documents\GitHub\dotNet5780_02\dotNet5780_02_3248_0250\dotNet5780_01_3248_0250\part 1\obj\Debug\part 1.csprojAssemblyReference.cache
+C:\Users\גלעד יוסף\Documents\GitHub\dotNet5780_02\dotNet5780_02_3248_0250\dotNet5780_01_3248_0250\part 1\bin\Debug\part 1.exe.config
+C:\Users\גלעד יוסף\Documents\GitHub\dotNet5780_02\dotNet5780_02_3248_0250\dotNet5780_01_3248_0250\part 1\bin\Debug\part 1.exe
+C:\Users\גלעד יוסף\Documents\GitHub\dotNet5780_02\dotNet5780_02_3248_0250\dotNet5780_01_3248_0250\part 1\bin\Debug\part 1.pdb
+C:\Users\גלעד יוסף\Documents\GitHub\dotNet5780_02\dotNet5780_02_3248_0250\dotNet5780_01_3248_0250\part 1\obj\Debug\part 1.exe
+C:\Users\גלעד יוסף\Documents\GitHub\dotNet5780_02\dotNet5780_02_3248_0250\dotNet5780_01_3248_0250\part 1\obj\Debug\part 1.pdb
