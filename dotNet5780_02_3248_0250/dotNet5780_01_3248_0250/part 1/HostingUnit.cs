@@ -68,13 +68,12 @@ namespace part_1
                 for (int j = 0; j < 31; j++)
                 {
                     if (occupancy[i, j])
-                        // 
                     {
                         int startMonth = i, startDay = j;
                         while (occupancy[i, j] || // Regular situation
                         
                             /* Makes sure that when two vacations are overlapping 
-                               but not cut each other the vacations are considered one vacation
+                               but not cut each other, the vacations are considered as one vacation
                          */
          /*   (!occupancy[i, j] && occupancy[getNewMonth(j, i, 1), getNewDay(j, 1)]))
                         {
