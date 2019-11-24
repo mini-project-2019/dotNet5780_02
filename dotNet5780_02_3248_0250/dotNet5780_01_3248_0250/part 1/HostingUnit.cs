@@ -63,6 +63,12 @@ namespace part_1
             return true; 
         }
 
+        public int GetAnnualBusyDays()
+        // I made this method's declaration because I have to use it in Host
+        {
+            return 0;
+        }
+
         public override string ToString()
         {
             return HostingUnitKey + ": " + occupiedDays_ToString(); 

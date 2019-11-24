@@ -32,6 +32,45 @@ namespace part_1
             }
         }
 
+        public override string ToString()
+        {
+            string hostToString = "Host ID: " + ID + "\n";
+            
+            foreach (HostingUnit hostingUnit in HostingUnitCollection)
+            {
+                hostToString += hostingUnit + "\n";
+            }
+            return hostToString;
+        }
 
+        private long SubmitRequest(GuestRequest guestReq)
+        {
+            int hostingUnitKey = -1;
+            foreach (HostingUnit hostingUnit in HostingUnitCollection)
+            {
+                if (hostingUnit.approveRequest(guestReq))
+                {
+                    hostingUnitKey = hostingUnit.HostingUnitKey;
+                    break;
+                }
+                
+            }
+            return hostingUnitKey;
+        }
+
+        public int GetHostAnnualBusyDays()
+        {
+            int annualBusyDays = 0;
+            foreach (HostingUnit hostingUnit in HostingUnitCollection)
+            {
+                annualBusyDays += hostingUnit.GetAnnualBusyDays();
+            }
+            return annualBusyDays;
+        }
+
+        public void SortUnits()
+        {
+            HostingUnitCollection.Sort();
+        }
     }
 }
