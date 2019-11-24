@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace part_1
 {
-    class Host
+    class Host //: IEnumerable<>
     {
         private int ID;
         private List<HostingUnit> _HostingUnitCollection;
@@ -26,9 +26,9 @@ namespace part_1
         {
             this.ID = ID;
             HostingUnitCollection = hostingUnits;
-            foreach (HostingUnit hostingUnit in HostingUnitCollection)
+            foreach (HostingUnit unit in HostingUnitCollection)
             {
-                hostingUnit.reset();
+                unit.reset();
             }
         }
 
@@ -36,9 +36,9 @@ namespace part_1
         {
             string hostToString = "Host ID: " + ID + "\n";
             
-            foreach (HostingUnit hostingUnit in HostingUnitCollection)
+            foreach (HostingUnit unit in HostingUnitCollection)
             {
-                hostToString += hostingUnit + "\n";
+                hostToString += unit + "\n";
             }
             return hostToString;
         }
@@ -46,11 +46,11 @@ namespace part_1
         private long SubmitRequest(GuestRequest guestReq)
         {
             int hostingUnitKey = -1;
-            foreach (HostingUnit hostingUnit in HostingUnitCollection)
+            foreach (HostingUnit unit in HostingUnitCollection)
             {
-                if (hostingUnit.approveRequest(guestReq))
+                if (unit.approveRequest(guestReq))
                 {
-                    hostingUnitKey = hostingUnit.HostingUnitKey;
+                    hostingUnitKey = unit.HostingUnitKey;
                     break;
                 }
                 
@@ -61,9 +61,9 @@ namespace part_1
         public int GetHostAnnualBusyDays()
         {
             int annualBusyDays = 0;
-            foreach (HostingUnit hostingUnit in HostingUnitCollection)
+            foreach (HostingUnit unit in HostingUnitCollection)
             {
-                annualBusyDays += hostingUnit.GetAnnualBusyDays();
+                annualBusyDays += unit.GetAnnualBusyDays();
             }
             return annualBusyDays;
         }
@@ -71,6 +71,35 @@ namespace part_1
         public void SortUnits()
         {
             HostingUnitCollection.Sort();
+        }
+
+        public bool AssignRequests(params GuestRequest[] requests)
+        {
+            bool succeededAll = true;
+
+            foreach (GuestRequest request in requests)
+            {
+                if(SubmitRequest(request) == -1)
+                {
+                    succeededAll = false;
+                }
+            }
+            return succeededAll;
+        }
+
+        public HostingUnit this[int unitKey]
+        {
+            get
+            {
+                foreach (HostingUnit unit in HostingUnitCollection)
+                {
+                    if (unitKey == unit.HostingUnitKey)
+                    {
+                        return unit;
+                    }
+                }
+                return null;
+            }
         }
     }
 }
