@@ -8,6 +8,7 @@ namespace part_1
 {
     class HostingUnit
     {
+        // A static variable that presents the number of total instances of HostingUnit
         static private int stSerialKey = 10000000;
 
         public static int _HostingUnitKey;
@@ -17,7 +18,7 @@ namespace part_1
             {
                 return _HostingUnitKey;
             }
-            set
+            private set
             {
                 _HostingUnitKey = value;
             }
@@ -38,7 +39,7 @@ namespace part_1
             for (int i = 0; i < GR.getDuration() - 1; i++)
             // Signs nights and not days
             {
-                if (diary[GR.Entry.AddDays(i).Month - 1, GR.Entry.AddDays(i).Day - 1])
+                if (diary[GR.EntryDate.AddDays(i).Month - 1, GR.EntryDate.AddDays(i).Day - 1])
                     // If there is at least one occupied day then the order rejected
                     /* Decreases the parameters in 1 to fix from ranges 
                        of [1, 31], [1, 12] to [0, 30], [0, 11]
@@ -55,7 +56,7 @@ namespace part_1
                    of [1, 31], [1, 12] to [0, 30], [0, 11]
                 */
             {
-                diary[GR.Entry.AddDays(i).Month - 1, GR.Entry.AddDays(i).Day - 1] = true;
+                diary[GR.EntryDate.AddDays(i).Month - 1, GR.EntryDate.AddDays(i).Day - 1] = true;
             }
 
             GR.IsApproved = true;
@@ -66,7 +67,12 @@ namespace part_1
         {
             return HostingUnitKey + ": " + occupiedDays_ToString(); 
         }
-        
+
+        public void reset()
+            // Complete this function, it should set its diary to be all false
+        {
+            
+        }
         private string occupiedDays_ToString()
         {
             string occupiedDays = "";
