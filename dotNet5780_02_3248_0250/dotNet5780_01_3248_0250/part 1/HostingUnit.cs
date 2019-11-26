@@ -74,11 +74,6 @@ namespace part_1
             return HostingUnitKey + ": " + occupiedDays_ToString(); 
         }
 
-        public void reset()
-            // Complete this function, it should set its diary to be all false
-        {
-            
-        }
         private string occupiedDays_ToString()
         {
             string occupiedDays = "";
@@ -112,7 +107,7 @@ namespace part_1
             }
             
             // Deletes the last 2 characters - ", "
-            return occupiedDays.Substring(0, occupiedDays.Length - 3);
+            return occupiedDays.Substring(0, occupiedDays.Length - 2);
         }
         
         static private int getNewMonth(int day, int month, int duration)

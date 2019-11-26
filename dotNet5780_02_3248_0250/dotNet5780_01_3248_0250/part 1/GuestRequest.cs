@@ -14,10 +14,10 @@ namespace part_1
         public DateTime ReleaseDate;
         public bool IsApproved;
 
-        public GuestRequest(int entryDateDay, int entryDateMonth, int releaseDateDay, int releaseDateMonth)
+        public GuestRequest(int entryDateDay, int entryDateMonth, int duration)
         {
             EntryDate = new DateTime(YEAR, entryDateMonth, entryDateDay);
-            ReleaseDate = new DateTime(YEAR, releaseDateMonth, releaseDateDay);
+            ReleaseDate = EntryDate.AddDays(duration);
             IsApproved = false;
         }
 
@@ -28,7 +28,7 @@ namespace part_1
 
         public override string ToString()
         {
-            return "EntryDate date: " +
+            return "EntryDate date: " + EntryDate +
                    "\nRelease date: " + ReleaseDate + 
                    "\nRequest approved: " + IsApproved +
                    "\n";

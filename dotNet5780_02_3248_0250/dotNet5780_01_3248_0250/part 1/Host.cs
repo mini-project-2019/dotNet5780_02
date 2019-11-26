@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace part_1
 {
-    class Host //: IEnumerable<HostingUnit>
+    class Host : IEnumerable
     {
         private int ID;
         private List<HostingUnit> _HostingUnitCollection;
@@ -25,13 +25,13 @@ namespace part_1
 
 
 
-        public Host(int ID, List<HostingUnit> hostingUnits)
+        public Host(int ID, int numOfHostingUnit)
         {
             this.ID = ID;
-            HostingUnitCollection = hostingUnits;
-            foreach (HostingUnit unit in HostingUnitCollection)
+            HostingUnitCollection = new List<HostingUnit>(numOfHostingUnit);
+            for (int i = 0; i < numOfHostingUnit; i++)
             {
-                unit.reset();
+                HostingUnitCollection.Add(new HostingUnit());
             }
         }
 
@@ -105,14 +105,9 @@ namespace part_1
             }
         }
 
-        /*public IEnumerator<HostingUnit> GetEnumerator()
+        public IEnumerator GetEnumerator()
         {
             return HostingUnitCollection.GetEnumerator();
         }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }*/
     }
 }
