@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace part_1
 {
-    class Host //: IEnumerable<>
+    class Host //: IEnumerable<HostingUnit>
     {
         private int ID;
         private List<HostingUnit> _HostingUnitCollection;
@@ -21,6 +22,8 @@ namespace part_1
                 _HostingUnitCollection = new List<HostingUnit>(value);
             }
         }
+
+
 
         public Host(int ID, List<HostingUnit> hostingUnits)
         {
@@ -101,5 +104,15 @@ namespace part_1
                 return null;
             }
         }
+
+        /*public IEnumerator<HostingUnit> GetEnumerator()
+        {
+            return HostingUnitCollection.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }*/
     }
 }
