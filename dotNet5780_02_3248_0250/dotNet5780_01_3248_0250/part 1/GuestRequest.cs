@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace part_1
 {
-    class GuestRequest //1012
+    class GuestRequest 
     {
         public const int YEAR = 2020;
 
