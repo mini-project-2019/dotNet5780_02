@@ -24,12 +24,11 @@ namespace part_1
             }
         }
 
-        private bool[,] diary;
+        public bool[,] Diary = new bool[12,31];
 
         public HostingUnit()
         {
             HostingUnitKey = stSerialKey++;
-            diary = new bool[12,31];
         }
 
         
@@ -39,7 +38,7 @@ namespace part_1
             for (int i = 0; i < GR.getDuration() - 1; i++)
             // Signs nights and not days
             {
-                if (diary[GR.EntryDate.AddDays(i).Month - 1, GR.EntryDate.AddDays(i).Day - 1])
+                if (Diary[GR.EntryDate.AddDays(i).Month - 1, GR.EntryDate.AddDays(i).Day - 1])
                     // If there is at least one occupied day then the order rejected
                     /* Decreases the parameters in 1 to fix from ranges 
                        of [1, 31], [1, 12] to [0, 30], [0, 11]
@@ -56,7 +55,7 @@ namespace part_1
                    of [1, 31], [1, 12] to [0, 30], [0, 11]
                 */
             {
-                diary[GR.EntryDate.AddDays(i).Month - 1, GR.EntryDate.AddDays(i).Day - 1] = true;
+                Diary[GR.EntryDate.AddDays(i).Month - 1, GR.EntryDate.AddDays(i).Day - 1] = true;
             }
 
             GR.IsApproved = true;
@@ -81,14 +80,14 @@ namespace part_1
             {
                 for (int j = 0; j < 31; j++)
                 {
-                    if (diary[i, j])
+                    if (Diary[i, j])
                     {
                         int startMonth = i, startDay = j;
-                        while (diary[i, j] || // Regular situation
+                        while (Diary[i, j] || // Regular situation
                             /* Makes sure that when two vacations are overlapping 
                                but not cut each other, the vacations are considered as one vacation
                             */
-                            (!diary[i, j] && diary[getNewMonth(j, i, 1), getNewDay(j, 1)]))
+                            (!Diary[i, j] && Diary[getNewMonth(j, i, 1), getNewDay(j, 1)]))
                         {
                             // Increases the end date of the vacation in 1
                             i = getNewMonth(j, i, 1);
