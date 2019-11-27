@@ -11,7 +11,7 @@ namespace part_1
         // A static variable that presents the number of total instances of HostingUnit
         static private int stSerialKey = 10000000;
 
-        public static int _HostingUnitKey;
+        private int _HostingUnitKey;
         public int HostingUnitKey
         {
             get
