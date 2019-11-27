@@ -18,7 +18,6 @@ namespace part_1
         {
             EntryDate = new DateTime(YEAR, entryDateMonth, entryDateDay);
             ReleaseDate = EntryDate.AddDays(duration);
-            IsApproved = false;
         }
 
         public int getDuration()
