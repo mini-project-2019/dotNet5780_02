@@ -96,7 +96,10 @@ namespace part_1
             return count;
         }
 
-
+        public float GetAnnualBusyPercentage()
+        {
+            return GetAnnualBusyDays() / (12 * 31);
+        }
 
 
 
