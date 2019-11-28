@@ -16,6 +16,10 @@ namespace part_1
 
         public GuestRequest(int entryDateDay, int entryDateMonth, int duration)
         {
+            if (duration < 2)
+            {
+                throw new ArgumentOutOfRangeException("Duration must be bigger than two");
+            }
             EntryDate = new DateTime(YEAR, entryDateMonth, entryDateDay);
             ReleaseDate = EntryDate.AddDays(duration);
         }
