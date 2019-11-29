@@ -48,17 +48,32 @@ namespace part_1
 
         private long SubmitRequest(GuestRequest guestReq)
         {
-            int hostingUnitKey = -1;
+            long hostingUnitKey = -1;
             foreach (HostingUnit unit in HostingUnitCollection)
             {
                 if (unit.approveRequest(guestReq))
                 {
                     hostingUnitKey = unit.HostingUnitKey;
-                    break;
+                    return hostingUnitKey;
                 }
-                
+
             }
             return hostingUnitKey;
+
+        }
+        
+        public bool AssignRequests(params GuestRequest[] requests)
+        {
+            bool succeededAll = true;
+
+            foreach (GuestRequest request in requests)
+            {
+                if(SubmitRequest(request) == -1)
+                {
+                    succeededAll = false;
+                }
+            }
+            return succeededAll;
         }
 
         public int GetHostAnnualBusyDays()
@@ -76,32 +91,22 @@ namespace part_1
             HostingUnitCollection.Sort();
         }
 
-        public bool AssignRequests(params GuestRequest[] requests)
-        {
-            bool succeededAll = true;
+        
 
-            foreach (GuestRequest request in requests)
-            {
-                if(SubmitRequest(request) == -1)
-                {
-                    succeededAll = false;
-                }
-            }
-            return succeededAll;
-        }
 
         public HostingUnit this[int unitKey]
         {
             get
             {
-                foreach (HostingUnit unit in HostingUnitCollection)
+                if (unitKey < HostingUnitCollection.Count)
                 {
-                    if (unitKey == unit.HostingUnitKey)
-                    {
-                        return unit;
-                    }
+                    return HostingUnitCollection[unitKey];
+                } 
+                else
+                {
+                    return null;
                 }
-                return null;
+                
             }
         }
 

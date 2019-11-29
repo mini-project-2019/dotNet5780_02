@@ -9,10 +9,10 @@ namespace part_1
     class HostingUnit : IComparable
     {
         // A static variable that presents the number of total instances of HostingUnit
-        static private int stSerialKey = 10000000;
+        static private long stSerialKey = 0;
 
-        private int _HostingUnitKey;
-        public int HostingUnitKey
+        private long _HostingUnitKey;
+        public long HostingUnitKey
         {
             get
             {
@@ -25,12 +25,26 @@ namespace part_1
         }
 
 
-
-        public bool[,] Diary = new bool[12, 31];
+        // Dr Visen told us we can make Diary this way
+        public bool[][] Diary = new bool[12][];
 
         public HostingUnit()
         {
             HostingUnitKey = stSerialKey++;
+
+            // Visen agreed this
+            Diary[0] = new bool[31];
+            Diary[2] = new bool[31];
+            Diary[4] = new bool[31];
+            Diary[6] = new bool[31];
+            Diary[7] = new bool[31];
+            Diary[9] = new bool[31];
+            Diary[11] = new bool[31];
+            Diary[1] = new bool[29];
+            Diary[3] = new bool[30];
+            Diary[5] = new bool[30];
+            Diary[8] = new bool[30];
+            Diary[10] = new bool[30];
         }
 
 
@@ -42,7 +56,7 @@ namespace part_1
             for (int i = 0; i < GR.getDuration() - 1; i++)
             // Signs nights and not days
             {
-                if (Diary[GR.EntryDate.AddDays(i).Month - 1, GR.EntryDate.AddDays(i).Day - 1])
+                if (Diary[GR.EntryDate.AddDays(i).Month - 1][GR.EntryDate.AddDays(i).Day - 1])
                 // If there is at least one occupied day then the order rejected
                 /* Decreases the parameters in 1 to fix from ranges 
                    of [1, 31], [1, 12] to [0, 30], [0, 11]
@@ -59,7 +73,7 @@ namespace part_1
                of [1, 31], [1, 12] to [0, 30], [0, 11]
             */
             {
-                Diary[GR.EntryDate.AddDays(i).Month - 1, GR.EntryDate.AddDays(i).Day - 1] = true;
+                Diary[GR.EntryDate.AddDays(i).Month - 1][GR.EntryDate.AddDays(i).Day - 1] = true;
             }
 
             GR.IsApproved = true;
@@ -76,15 +90,16 @@ namespace part_1
             int count = 0;
             for (int i = 0; i < 12; i++)
             {
-                for (int j = 0; j < 31; j++)
+                for (int j = 0; j < Diary[i].Length; j++)
                 {
-                    if (Diary[i, j])
+                    if (Diary[i][j])
                     {
-                        while (Diary[i, j])
+                        while (Diary[i][j])
                         {
                             count++;
+                            int tmpMonth = i;
                             i = getNewMonth(j, i, 1);
-                            j = getNewDay(j, 1);
+                            j = getNewDay(j, tmpMonth, 1);
                         }
 
                         /* In any sequence of vacations the last day is not 
@@ -98,7 +113,7 @@ namespace part_1
 
         public float GetAnnualBusyPercentage()
         {
-            return GetAnnualBusyDays() / (12 * 31);
+            return (float)(GetAnnualBusyDays() / 366.0);
         }
 
 
@@ -114,20 +129,21 @@ namespace part_1
             string occupiedDays = "";
             for (int i = 0; i < 12; i++)
             {
-                for (int j = 0; j < 31; j++)
+                for (int j = 0; j < Diary[i].Length; j++)
                 {
-                    if (Diary[i, j])
+                    if (Diary[i][j])
                     {
                         int startMonth = i, startDay = j;
-                        while (Diary[i, j] || // Regular situation
+                        while (Diary[i][j] || // Regular situation
                                               /* Makes sure that when two vacations are overlapping 
                                                  but not cut each other, the vacations are considered as one vacation
                                               */
-                            (!Diary[i, j] && Diary[getNewMonth(j, i, 1), getNewDay(j, 1)]))
+                            (!Diary[i][j] && Diary[getNewMonth(j, i, 1)][getNewDay(j, i, 1)]))
                         {
                             // Increases the end date of the vacation in 1
+                            int tmpMonth = i;
                             i = getNewMonth(j, i, 1);
-                            j = getNewDay(j, 1);
+                            j = getNewDay(j, tmpMonth, 1);
                         }
 
                         occupiedDays += (startDay + 1) + "/" + (startMonth + 1) +
@@ -151,16 +167,16 @@ namespace part_1
 
 
 
-        static private int getNewMonth(int day, int month, int duration)
+        private int getNewMonth(int day, int month, int duration)
         // Returns the month of the last day of the request in range of [0, 30]
         {
-            return month + (day + duration) / 31;
+            return month + (day + duration) / Diary[month].Length;
         }
 
-        static private int getNewDay(int day, int duration)
+        private int getNewDay(int day, int month, int duration)
         // Returns the location in month of the last day of the request in range of [0, 11]
         {
-            return ((day + duration) % 31);
+            return ((day + duration) % Diary[month].Length);
         }
 
         public int CompareTo(object obj)
